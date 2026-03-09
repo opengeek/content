@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Opengeek\Content\Article\Markdown;
 
 use Mni\FrontYAML\Document;
-use Opengeek\Content\Article\ArticleDto;
+use Opengeek\Content\Article\Article;
 use Opengeek\Content\Contracts\ContentMapperInterface;
 use Opengeek\Content\Exception\ContentMappingException;
 
 /**
- * Maps a FrontYAML Document (parsed from a Markdown file) to an ArticleDto.
+ * Maps a FrontYAML Document (parsed from a Markdown file) to an Article.
  *
  * Fields are mapped explicitly rather than through generic property hydration,
  * making required-field validation obvious and the mapping self-documenting.
  *
- * @implements ContentMapperInterface<Document, ArticleDto>
+ * @implements ContentMapperInterface<Document, Article>
  */
 final class MarkdownArticleMapper implements ContentMapperInterface
 {
@@ -24,7 +24,7 @@ final class MarkdownArticleMapper implements ContentMapperInterface
      *
      * @throws ContentMappingException if a required YAML field is absent or invalid
      */
-    public function map(mixed $source): ArticleDto
+    public function map(mixed $source): Article
     {
         if (!$source instanceof Document) {
             throw new ContentMappingException(sprintf(
@@ -37,7 +37,7 @@ final class MarkdownArticleMapper implements ContentMapperInterface
 
         $yaml = $source->getYAML() ?? [];
 
-        return new ArticleDto(
+        return new Article(
             slug: $this->requireString($yaml, 'slug'),
             title: $this->requireString($yaml, 'title'),
             publishDate: $this->requireString($yaml, 'publishDate'),

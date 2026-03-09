@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Opengeek\Content\Tests\Article\Markdown;
 
 use Mni\FrontYAML\Parser;
-use Opengeek\Content\Article\ArticleDto;
+use Opengeek\Content\Article\Article;
 use Opengeek\Content\Article\Markdown\MarkdownArticleMapper;
 use Opengeek\Content\Exception\ContentMappingException;
 use PHPUnit\Framework\TestCase;
@@ -50,7 +50,7 @@ final class MarkdownArticleMapperTest extends TestCase
 
         $dto = $this->mapper->map($this->parse($raw));
 
-        self::assertInstanceOf(ArticleDto::class, $dto);
+        self::assertInstanceOf(Article::class, $dto);
         self::assertSame('2024/01/hello-world', $dto->slug);
         self::assertSame('Hello World', $dto->title);
         self::assertSame('The subtitle', $dto->subtitle);

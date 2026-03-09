@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Opengeek\Content\Tests\Article;
 
-use Opengeek\Content\Article\ArticleDto;
+use Opengeek\Content\Article\Article;
 use PHPUnit\Framework\TestCase;
 
-final class ArticleDtoTest extends TestCase
+final class ArticleTest extends TestCase
 {
-    private function makeDto(string $publishDate = '2024-01-15 09:00am'): ArticleDto
+    private function makeDto(string $publishDate = '2024-01-15 09:00am'): Article
     {
-        return new ArticleDto(
+        return new Article(
             slug: '2024/01/hello-world',
             title: 'Hello World',
             publishDate: $publishDate,
@@ -59,7 +59,7 @@ final class ArticleDtoTest extends TestCase
 
     public function testOptionalFieldsHaveDefaults(): void
     {
-        $dto = new ArticleDto(
+        $dto = new Article(
             slug: 'test',
             title: 'Test',
             publishDate: '2024-01-01',

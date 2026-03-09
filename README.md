@@ -21,13 +21,13 @@ The library is built on three layers:
 
 | Layer | Class | Purpose |
 |-------|-------|---------|
-| **DTO** | `ArticleDto` | Readonly value object holding article data. No behaviour — just typed fields. |
-| **Mapper** | `MarkdownArticleMapper` | Translates a parsed Markdown + YAML document into an `ArticleDto`. |
+| **Article** | `Article` | Readonly value object holding article data. No behaviour — just typed fields. |
+| **Mapper** | `MarkdownArticleMapper` | Translates a parsed Markdown + YAML document into an `Article`. |
 | **Repository** | `ArticleRepositoryInterface` | The contract your controllers depend on. `MarkdownArticleRepository` is the bundled implementation. |
 
-Controllers and templates depend only on `ArticleRepositoryInterface` and `ArticleDto`. Swapping the backing store means binding a different repository class in your DI container — nothing else changes.
+Controllers and templates depend only on `ArticleRepositoryInterface` and `Article`. Swapping the backing store means binding a different repository class in your DI container — nothing else changes.
 
-> **Note on HTML rendering.** `ArticleDto` stores raw Markdown in `$markdownContent`, not HTML. Inject `MarkdownRendererInterface` into controllers that need rendered output, and call `$renderer->render($article->markdownContent)` there. This keeps the DTO serialisation-friendly and avoids paying the rendering cost for consumers that don't need HTML (RSS feeds, search indexers, etc.).
+> **Note on HTML rendering.** `Article` stores raw Markdown in `$markdownContent`, not HTML. Inject `MarkdownRendererInterface` into controllers that need rendered output, and call `$renderer->render($article->markdownContent)` there. This keeps the DTO serialisation-friendly and avoids paying the rendering cost for consumers that don't need HTML (RSS feeds, search indexers, etc.).
 
 ---
 
@@ -318,7 +318,7 @@ final readonly class Article
 
 ---
 
-## `ArticleDto` Reference
+## `Article` Reference
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
@@ -367,7 +367,7 @@ namespace Opengeek\Repositories;
 
 use Doctrine\DBAL\Connection;
 use Opengeek\Content\Article\ArticleCollection;
-use Opengeek\Content\Article\ArticleDto;
+use Opengeek\Content\Article\Article;
 use Opengeek\Content\Article\ArticleRepositoryInterface;
 use Opengeek\Content\Exception\ContentNotFoundException;
 
@@ -400,7 +400,7 @@ final readonly class DoctrineArticleRepository implements ArticleRepositoryInter
         return new ArticleCollection(array_map($this->toDto(...), $rows));
     }
 
-    public function findBySlug(string $slug): ArticleDto
+    public function findBySlug(string $slug): Article
     {
         $row = $this->connection->createQueryBuilder()
             ->select('*')
@@ -416,9 +416,9 @@ final readonly class DoctrineArticleRepository implements ArticleRepositoryInter
         return $this->toDto($row);
     }
 
-    private function toDto(array $row): ArticleDto
+    private function toDto(array $row): Article
     {
-        return new ArticleDto(
+        return new Article(
             slug:            $row['slug'],
             title:           $row['title'],
             publishDate:     $row['publish_date'],

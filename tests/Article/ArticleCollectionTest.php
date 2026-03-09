@@ -6,14 +6,14 @@ namespace Opengeek\Content\Tests\Article;
 
 use LogicException;
 use Opengeek\Content\Article\ArticleCollection;
-use Opengeek\Content\Article\ArticleDto;
+use Opengeek\Content\Article\Article;
 use PHPUnit\Framework\TestCase;
 
 final class ArticleCollectionTest extends TestCase
 {
-    private function makeDto(string $slug, string $publishDate): ArticleDto
+    private function makeDto(string $slug, string $publishDate): Article
     {
-        return new ArticleDto(
+        return new Article(
             slug: $slug,
             title: ucwords(str_replace('-', ' ', $slug)),
             publishDate: $publishDate,

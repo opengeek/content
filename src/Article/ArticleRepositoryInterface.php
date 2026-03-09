@@ -12,10 +12,10 @@ use Opengeek\Content\Exception\ContentNotFoundException;
  *
  * Implementations may back this with Markdown files, a relational database,
  * a document store, a REST API, or a search index such as OpenSearch.
- * The returned types are always ArticleDto / ArticleCollection regardless
+ * The returned types are always Article / ArticleCollection regardless
  * of the backing store.
  *
- * @extends ContentRepositoryInterface<ArticleDto, ArticleCollection>
+ * @extends ContentRepositoryInterface<Article, ArticleCollection>
  */
 interface ArticleRepositoryInterface extends ContentRepositoryInterface
 {
@@ -38,5 +38,5 @@ interface ArticleRepositoryInterface extends ContentRepositoryInterface
      *
      * @throws ContentNotFoundException if no article matches the given slug
      */
-    public function findBySlug(string $slug): ArticleDto;
+    public function findBySlug(string $slug): Article;
 }

@@ -7,7 +7,7 @@ namespace Opengeek\Content\Article\Markdown;
 use Iterator;
 use Mni\FrontYAML\Parser;
 use Opengeek\Content\Article\ArticleCollection;
-use Opengeek\Content\Article\ArticleDto;
+use Opengeek\Content\Article\Article;
 use Opengeek\Content\Article\ArticleRepositoryInterface;
 use Opengeek\Content\Exception\ContentMappingException;
 use Opengeek\Content\Exception\ContentNotFoundException;
@@ -59,7 +59,7 @@ final class MarkdownArticleRepository implements ArticleRepositoryInterface
             ->sortByPublishDateDescending();
     }
 
-    public function findBySlug(string $slug): ArticleDto
+    public function findBySlug(string $slug): Article
     {
         foreach ($this->findMarkdownFiles() as $file) {
             try {
@@ -94,7 +94,7 @@ final class MarkdownArticleRepository implements ArticleRepositoryInterface
     /**
      * @throws ContentMappingException
      */
-    private function parseFile(SplFileInfo $file): ArticleDto
+    private function parseFile(SplFileInfo $file): Article
     {
         $raw = file_get_contents($file->getPathname());
 

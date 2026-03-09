@@ -13,31 +13,31 @@ use LogicException;
 use Traversable;
 
 /**
- * A typed, immutable, iterable collection of ArticleDto objects.
+ * A typed, immutable, iterable collection of Article objects.
  *
  * Methods that return a filtered or sorted subset always return a new
  * ArticleCollection instance rather than mutating the receiver.
  *
- * @implements IteratorAggregate<int, ArticleDto>
- * @implements ArrayAccess<int, ArticleDto>
+ * @implements IteratorAggregate<int, Article>
+ * @implements ArrayAccess<int, Article>
  */
 final class ArticleCollection implements IteratorAggregate, Countable, ArrayAccess
 {
-    /** @var ArticleDto[] */
+    /** @var Article[] */
     private array $items;
 
     /**
-     * @param ArticleDto[] $items
+     * @param Article[] $items
      *
-     * @throws InvalidArgumentException if any element is not an ArticleDto
+     * @throws InvalidArgumentException if any element is not an Article
      */
     public function __construct(array $items = [])
     {
         foreach ($items as $item) {
-            if (!$item instanceof ArticleDto) {
+            if (!$item instanceof Article) {
                 throw new InvalidArgumentException(sprintf(
                     'ArticleCollection only accepts %s instances, got %s',
-                    ArticleDto::class,
+                    Article::class,
                     get_debug_type($item)
                 ));
             }
@@ -52,7 +52,7 @@ final class ArticleCollection implements IteratorAggregate, Countable, ArrayAcce
     public function filterPublished(\DateTimeImmutable $now = new \DateTimeImmutable()): self
     {
         return new self(array_values(
-            array_filter($this->items, static fn(ArticleDto $dto) => $dto->isPublished($now))
+            array_filter($this->items, static fn(Article $dto) => $dto->isPublished($now))
         ));
     }
 
@@ -62,7 +62,7 @@ final class ArticleCollection implements IteratorAggregate, Countable, ArrayAcce
     public function sortByPublishDateDescending(): self
     {
         $items = $this->items;
-        usort($items, static fn(ArticleDto $a, ArticleDto $b): int => (
+        usort($items, static fn(Article $a, Article $b): int => (
             $b->getPublishDateTime() <=> $a->getPublishDateTime()
         ));
 
@@ -90,7 +90,7 @@ final class ArticleCollection implements IteratorAggregate, Countable, ArrayAcce
     // IteratorAggregate
     // -----------------------------------------------------------------------
 
-    /** @return Traversable<int, ArticleDto> */
+    /** @return Traversable<int, Article> */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
@@ -105,7 +105,7 @@ final class ArticleCollection implements IteratorAggregate, Countable, ArrayAcce
         return isset($this->items[$offset]);
     }
 
-    public function offsetGet(mixed $offset): ArticleDto
+    public function offsetGet(mixed $offset): Article
     {
         return $this->items[$offset];
     }

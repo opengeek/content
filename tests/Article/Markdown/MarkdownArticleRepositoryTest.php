@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Opengeek\Content\Tests\Article\Markdown;
 
 use Opengeek\Content\Article\ArticleCollection;
-use Opengeek\Content\Article\ArticleDto;
+use Opengeek\Content\Article\Article;
 use Opengeek\Content\Article\Markdown\MarkdownArticleMapper;
 use Opengeek\Content\Article\Markdown\MarkdownArticleRepository;
 use Opengeek\Content\Article\Markdown\MarkdownArticleRepositoryConfig;
@@ -43,7 +43,7 @@ final class MarkdownArticleRepositoryTest extends TestCase
         $result = $this->repository->findAll();
 
         $slugs = array_map(
-            static fn(ArticleDto $dto) => $dto->slug,
+            static fn(Article $dto) => $dto->slug,
             iterator_to_array($result)
         );
 
@@ -57,7 +57,7 @@ final class MarkdownArticleRepositoryTest extends TestCase
         $published = $this->repository->findPublished();
 
         $slugs = array_map(
-            static fn(ArticleDto $dto) => $dto->slug,
+            static fn(Article $dto) => $dto->slug,
             iterator_to_array($published)
         );
 
@@ -84,7 +84,7 @@ final class MarkdownArticleRepositoryTest extends TestCase
     {
         $dto = $this->repository->findBySlug('2024/01/hello-world');
 
-        self::assertInstanceOf(ArticleDto::class, $dto);
+        self::assertInstanceOf(Article::class, $dto);
         self::assertSame('2024/01/hello-world', $dto->slug);
         self::assertSame('Hello World', $dto->title);
     }
