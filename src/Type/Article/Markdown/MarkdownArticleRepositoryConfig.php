@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Article\Markdown;
+namespace Opengeek\Content\Type\Article\Markdown;
 
 /**
  * Configuration value object for MarkdownArticleRepository.

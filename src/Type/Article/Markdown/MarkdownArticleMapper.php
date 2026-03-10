@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Article\Markdown;
+namespace Opengeek\Content\Type\Article\Markdown;
 
 use Mni\FrontYAML\Document;
-use Opengeek\Content\Article\Article;
+use Opengeek\Content\Type\Article\Article;
 use Opengeek\Content\Contracts\ContentMapperInterface;
 use Opengeek\Content\Exception\ContentMappingException;
 

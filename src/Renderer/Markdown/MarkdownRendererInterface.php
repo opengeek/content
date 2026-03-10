@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Renderer;
+namespace Opengeek\Content\Renderer\Markdown;
 
 /**
  * Converts a Markdown string to HTML.

@@ -21,13 +21,13 @@ The library is built on three layers:
 
 | Layer | Class | Purpose |
 |-------|-------|---------|
-| **Article** | `Article` | Readonly value object holding article data. No behaviour — just typed fields. |
-| **Mapper** | `MarkdownArticleMapper` | Translates a parsed Markdown + YAML document into an `Article`. |
-| **Repository** | `ArticleRepositoryInterface` | The contract your controllers depend on. `MarkdownArticleRepository` is the bundled implementation. |
+| **Article** | `Article` | Readonly value object holding article data. No behaviour — just typed fields. Found in `Opengeek\Content\Type\Article`. |
+| **Mapper** | `MarkdownArticleMapper` | Translates a parsed Markdown + YAML document into an `Article`. Found in `Opengeek\Content\Type\Article\Markdown`. |
+| **Repository** | `ArticleRepositoryInterface` | The contract your controllers depend on. `MarkdownArticleRepository` is the bundled implementation. Found in `Opengeek\Content\Type\Article`. |
 
 Controllers and templates depend only on `ArticleRepositoryInterface` and `Article`. Swapping the backing store means binding a different repository class in your DI container — nothing else changes.
 
-> **Note on HTML rendering.** `Article` stores raw Markdown in `$markdownContent`, not HTML. Inject `MarkdownRendererInterface` into controllers that need rendered output, and call `$renderer->render($article->markdownContent)` there. This keeps the DTO serialisation-friendly and avoids paying the rendering cost for consumers that don't need HTML (RSS feeds, search indexers, etc.).
+> **Note on HTML rendering.** `Article` stores raw Markdown in `$markdownContent`, not HTML. Inject `MarkdownRendererInterface` into controllers that need rendered output, and call `$renderer->render($article->markdownContent)` there. This keeps the DTO serialisation-friendly and avoids paying the rendering cost for consumers that don't need HTML (RSS feeds, search indexers, etc.). `MarkdownRendererInterface` is found in `Opengeek\Content\Renderer\Markdown`.
 
 ---
 
@@ -119,12 +119,12 @@ In `config/settings.php`, add a `content` block inside the settings array:
 Add the following bindings to `config/dependencies.php`. Place them inside the existing `$containerBuilder->addDefinitions([...])` call.
 
 ```php
-use Opengeek\Content\Article\ArticleRepositoryInterface;
-use Opengeek\Content\Article\Markdown\MarkdownArticleMapper;
-use Opengeek\Content\Article\Markdown\MarkdownArticleRepository;
-use Opengeek\Content\Article\Markdown\MarkdownArticleRepositoryConfig;
-use Opengeek\Content\Renderer\HtmlMarkdownRenderer;
-use Opengeek\Content\Renderer\MarkdownRendererInterface;
+use Opengeek\Content\Type\Article\ArticleRepositoryInterface;
+use Opengeek\Content\Type\Article\Markdown\MarkdownArticleMapper;
+use Opengeek\Content\Type\Article\Markdown\MarkdownArticleRepository;
+use Opengeek\Content\Type\Article\Markdown\MarkdownArticleRepositoryConfig;
+use Opengeek\Content\Renderer\Markdown\HtmlMarkdownRenderer;
+use Opengeek\Content\Renderer\Markdown\MarkdownRendererInterface;
 use Psr\Container\ContainerInterface;
 
 // ... inside addDefinitions([
@@ -169,7 +169,7 @@ declare(strict_types=1);
 
 namespace Opengeek\Controllers;
 
-use Opengeek\Content\Article\ArticleRepositoryInterface;
+use Opengeek\Content\Type\Article\ArticleRepositoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\Twig;
@@ -214,9 +214,9 @@ declare(strict_types=1);
 
 namespace Opengeek\Controllers;
 
-use Opengeek\Content\Article\ArticleRepositoryInterface;
+use Opengeek\Content\Type\Article\ArticleRepositoryInterface;
 use Opengeek\Content\Exception\ContentNotFoundException;
-use Opengeek\Content\Renderer\MarkdownRendererInterface;
+use Opengeek\Content\Renderer\Markdown\MarkdownRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;

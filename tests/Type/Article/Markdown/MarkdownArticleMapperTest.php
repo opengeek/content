@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Tests\Article\Markdown;
+namespace Opengeek\Content\Tests\Type\Article\Markdown;
 
 use Mni\FrontYAML\Parser;
-use Opengeek\Content\Article\Article;
-use Opengeek\Content\Article\Markdown\MarkdownArticleMapper;
+use Opengeek\Content\Type\Article\Article;
+use Opengeek\Content\Type\Article\Markdown\MarkdownArticleMapper;
 use Opengeek\Content\Exception\ContentMappingException;
 use PHPUnit\Framework\TestCase;
 

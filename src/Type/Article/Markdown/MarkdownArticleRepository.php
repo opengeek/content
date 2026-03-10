@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Article\Markdown;
+namespace Opengeek\Content\Type\Article\Markdown;
 
 use Iterator;
 use Mni\FrontYAML\Parser;
-use Opengeek\Content\Article\ArticleCollection;
-use Opengeek\Content\Article\Article;
-use Opengeek\Content\Article\ArticleRepositoryInterface;
+use Opengeek\Content\Type\Article\ArticleCollection;
+use Opengeek\Content\Type\Article\Article;
+use Opengeek\Content\Type\Article\ArticleRepositoryInterface;
 use Opengeek\Content\Exception\ContentMappingException;
 use Opengeek\Content\Exception\ContentNotFoundException;
 use SplFileInfo;

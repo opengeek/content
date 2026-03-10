@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Tests\Article\Markdown;
+namespace Opengeek\Content\Tests\Type\Article\Markdown;
 
-use Opengeek\Content\Article\ArticleCollection;
-use Opengeek\Content\Article\Article;
-use Opengeek\Content\Article\Markdown\MarkdownArticleMapper;
-use Opengeek\Content\Article\Markdown\MarkdownArticleRepository;
-use Opengeek\Content\Article\Markdown\MarkdownArticleRepositoryConfig;
+use Opengeek\Content\Type\Article\ArticleCollection;
+use Opengeek\Content\Type\Article\Article;
+use Opengeek\Content\Type\Article\Markdown\MarkdownArticleMapper;
+use Opengeek\Content\Type\Article\Markdown\MarkdownArticleRepository;
+use Opengeek\Content\Type\Article\Markdown\MarkdownArticleRepositoryConfig;
 use Opengeek\Content\Exception\ContentNotFoundException;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +19,7 @@ final class MarkdownArticleRepositoryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->fixturesPath = dirname(__DIR__, 2) . '/fixtures/articles';
+        $this->fixturesPath = dirname(__DIR__, 3) . '/fixtures/articles';
         $this->repository = new MarkdownArticleRepository(
             config: new MarkdownArticleRepositoryConfig(
                 contentPath: $this->fixturesPath,
