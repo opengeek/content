@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Tests\Type\Article;
+namespace Opengeek\Content\Tests;
 
 use LogicException;
-use Opengeek\Content\Type\Article\ArticleCollection;
-use Opengeek\Content\Type\Article\Article;
+use Opengeek\Content\ArticleCollection;
+use Opengeek\Content\Article;
 use PHPUnit\Framework\TestCase;
 
 final class ArticleCollectionTest extends TestCase

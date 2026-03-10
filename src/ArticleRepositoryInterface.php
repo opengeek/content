@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Type\Article;
+namespace Opengeek\Content;
 
 use Opengeek\Content\Contracts\ContentRepositoryInterface;
 use Opengeek\Content\Exception\ContentNotFoundException;

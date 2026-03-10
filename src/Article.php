@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Opengeek\Content\Type\Article;
+namespace Opengeek\Content;
 
 /**
  * Represents an article content item.
