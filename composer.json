@@ -1,6 +1,6 @@
 {
     "name": "opengeek/content",
-    "description": "Content management abstractions and Markdown file implementation for opengeek projects",
+    "description": "Simple content management abstractions and implementations",
     "version": "0.1.0",
     "type": "library",
     "license": "proprietary",
