@@ -31,7 +31,7 @@ interface ArticleRepositoryInterface extends ContentRepositoryInterface
      * push the publish-date filter and sort to the backing store rather than
      * loading all records into memory.
      */
-    public function findPublished(): ArticleCollection;
+    public function findPublished(?\DateTimeImmutable $now = null): ArticleCollection;
 
     /**
      * Find a single article by its slug.

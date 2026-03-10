@@ -52,10 +52,10 @@ final class MarkdownArticleRepository implements ArticleRepositoryInterface
         return new ArticleCollection($articles);
     }
 
-    public function findPublished(): ArticleCollection
+    public function findPublished(?\DateTimeImmutable $now = null): ArticleCollection
     {
         return $this->findAll()
-            ->filterPublished()
+            ->filterPublished($now ?? new \DateTimeImmutable())
             ->sortByPublishDateDescending();
     }
 
