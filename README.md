@@ -22,8 +22,9 @@ The library is built on three layers:
 | Layer | Class | Purpose |
 |-------|-------|---------|
 | **Article** | `Article` | Readonly value object holding article data. No behaviour — just typed fields. Found in `Opengeek\Content\Type\Article`. |
-| **Mapper** | `MarkdownArticleMapper` | Translates a parsed Markdown + YAML document into an `Article`. Found in `Opengeek\Content\Type\Article\Markdown`. |
-| **Repository** | `ArticleRepositoryInterface` | The contract your controllers depend on. `MarkdownArticleRepository` is the bundled implementation. Found in `Opengeek\Content\Type\Article`. |
+| **Mapper** | `DbalArticleMapper` | Translates a database row array into an `Article` and vice versa. Found in `Opengeek\Content\Type\Article\Doctrine\Dbal`. |
+| **Repository** | `ArticleRepositoryInterface` | The contract your controllers depend on for reading content. `DbalArticleRepository` and `MarkdownArticleRepository` are the bundled implementations. Found in `Opengeek\Content\Type\Article`. |
+| **Persister** | `ArticlePersisterInterface` | The contract for writing content. `DbalArticlePersister` is the bundled implementation. Found in `Opengeek\Content\Type\Article`. |
 
 Controllers and templates depend only on `ArticleRepositoryInterface` and `Article`. Swapping the backing store means binding a different repository class in your DI container — nothing else changes.
 
@@ -354,7 +355,58 @@ final readonly class Article
 
 ---
 
-## Custom Backend Implementations
+## Persistence and Writable Backends
+
+The library distinguishes between **read-only** backends (like Markdown files) and **writable** backends (like a SQL database via Doctrine DBAL).
+
+- **Repositories** are for reading: `ArticleRepositoryInterface`
+- **Persisters** are for writing: `ArticlePersisterInterface`
+- **Writable Repositories** combine both: `WritableArticleRepositoryInterface`
+
+### Using Doctrine DBAL for Persistence
+
+The library includes a Doctrine DBAL implementation that supports both reading and writing articles.
+
+#### 1. Initialize the Schema (SQLite example)
+
+If you are using SQLite, you can use the provided schema manager to create the necessary table:
+
+```php
+use Opengeek\Content\Type\Article\Doctrine\Sqlite\SqliteArticleSchemaManager;
+
+$schemaManager = new SqliteArticleSchemaManager($connection);
+$schemaManager->initializeSchema();
+```
+
+#### 2. Reading and Writing
+
+```php
+use Opengeek\Content\Type\Article\Article;
+use Opengeek\Content\Type\Article\Doctrine\Dbal\DbalArticleRepository;
+use Opengeek\Content\Type\Article\Doctrine\Dbal\DbalArticlePersister;
+
+$repository = new DbalArticleRepository($connection);
+$persister = new DbalArticlePersister($connection);
+
+// Save an article
+$article = new Article(
+    slug: 'my-new-article',
+    title: 'My New Article',
+    publishDate: '2024-03-10 10:00:00',
+    markdownContent: '# Hello World'
+);
+$persister->save($article);
+
+// Read it back
+$savedArticle = $repository->findBySlug('my-new-article');
+
+// Delete it
+$persister->delete('my-new-article');
+```
+
+Markdown repositories remain read-only and do not implement `ArticlePersisterInterface`.
+
+---
 
 To swap out Markdown files for a different storage backend, implement `ArticleRepositoryInterface` and a corresponding mapper:
 
