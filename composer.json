@@ -12,8 +12,9 @@
     ],
     "require": {
         "php": "^8.3",
-        "mnapoli/front-yaml": "^2.0",
+        "doctrine/dbal": "^3.8",
         "michelf/php-markdown": "^2.0",
+        "mnapoli/front-yaml": "^2.0",
         "symfony/finder": "^7.0"
     },
     "require-dev": {
