@@ -29,4 +29,11 @@ interface ContentRepositoryInterface
      * @throws ContentNotFoundException
      */
     public function findBySlug(string $slug): mixed;
+
+    /**
+     * Return only published content items as of $now.
+     *
+     * @return TCollection
+     */
+    public function findPublished(?\DateTimeImmutable $now = null): mixed;
 }

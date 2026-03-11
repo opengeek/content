@@ -5,7 +5,8 @@
     "type": "library",
     "license": "MIT",
     "require": {
-        "php": "^8.3"
+        "php": "^8.3",
+        "symfony/cache": "^7.0"
     },
     "require-dev": {
         "marcocesarato/php-conventional-changelog": "^1.17",
