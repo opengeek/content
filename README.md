@@ -11,13 +11,15 @@ composer require opengeek/content
 ```
 
 ## What's Included
-
-- `Article` DTO: A pure value container for article data.
-- `ArticleCollection`: A typed, immutable collection of `Article` objects.
-- `ArticleRepositoryInterface`: Contract for reading articles.
-- `ArticlePersisterInterface`: Contract for writing articles.
-- `MarkdownRendererInterface`: Implementation-agnostic interface for rendering Markdown to HTML.
-- Shared Exceptions: `ContentException`, `ContentNotFoundException`, etc.
+- **Contracts**: Generic interfaces for repositories (`ContentRepositoryInterface`) and collections (`ContentCollectionInterface`).
+- **Support**: `ContentCollectionTrait` for rapid collection implementation with filtering, sorting, and slicing.
+- **Caching**: `CachingContentRepository` decorator to add PSR-6/Symfony Cache support to any repository.
+- **Article DTO**: A pure value container for article data.
+- **ArticleCollection**: A typed, immutable, and searchable collection of `Article` objects.
+- **ArticleRepositoryInterface**: Specialized contract for reading articles.
+- **ArticlePersisterInterface**: Contract for writing articles.
+- **MarkdownRendererInterface**: Implementation-agnostic interface for rendering Markdown to HTML.
+- **Shared Exceptions**: `ContentException`, `ContentNotFoundException`, `ContentMappingException`, etc.
 
 ## Usage
 
