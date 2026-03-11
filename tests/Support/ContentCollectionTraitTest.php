@@ -11,24 +11,30 @@ final class ContentCollectionTraitTest extends TestCase
 {
     public function testSortByPublishDateDescendingSkipsItemsWithoutMethod(): void
     {
-        $item1 = new class {
-            public function getPublishDateTime(): \DateTimeImmutable {
+        $item1 = new class () {
+            public function getPublishDateTime(): \DateTimeImmutable
+            {
                 return new \DateTimeImmutable('2024-01-01');
             }
         };
-        $item2 = new class {}; // Missing method
-        $item3 = new class {
-            public function getPublishDateTime(): \DateTimeImmutable {
+        $item2 = new class () {}; // Missing method
+        $item3 = new class () {
+            public function getPublishDateTime(): \DateTimeImmutable
+            {
                 return new \DateTimeImmutable('2024-01-02');
             }
         };
 
-        $collection = new class([$item1, $item2, $item3]) {
+        $collection = new class ([$item1, $item2, $item3]) {
             use ContentCollectionTrait;
-            public function __construct(array $items) {
+            public function __construct(array $items)
+            {
                 $this->items = $items;
             }
-            public function all() { return $this->items; }
+            public function all()
+            {
+                return $this->items;
+            }
         };
 
         $sorted = $collection->sortByPublishDateDescending();
@@ -44,19 +50,24 @@ final class ContentCollectionTraitTest extends TestCase
 
     public function testFilterPublishedSkipsItemsWithoutMethod(): void
     {
-        $item1 = new class {
-            public function isPublished(\DateTimeImmutable $now): bool {
+        $item1 = new class () {
+            public function isPublished(\DateTimeImmutable $now): bool
+            {
                 return true;
             }
         };
-        $item2 = new class {}; // Missing method
-        
-        $collection = new class([$item1, $item2]) {
+        $item2 = new class () {}; // Missing method
+
+        $collection = new class ([$item1, $item2]) {
             use ContentCollectionTrait;
-            public function __construct(array $items) {
+            public function __construct(array $items)
+            {
                 $this->items = $items;
             }
-            public function all() { return $this->items; }
+            public function all()
+            {
+                return $this->items;
+            }
         };
 
         $filtered = $collection->filterPublished();
