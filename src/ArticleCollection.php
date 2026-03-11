@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Opengeek\Content;
 
+use Opengeek\Content\Contracts\ContentCollectionInterface;
+use Opengeek\Content\Support\ContentCollectionTrait;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
@@ -18,11 +20,13 @@ use Traversable;
  * Methods that return a filtered or sorted subset always return a new
  * ArticleCollection instance rather than mutating the receiver.
  *
- * @implements IteratorAggregate<int, Article>
+ * @implements ContentCollectionInterface<int, Article>
  * @implements ArrayAccess<int, Article>
  */
-final class ArticleCollection implements IteratorAggregate, Countable, ArrayAccess
+final class ArticleCollection implements ContentCollectionInterface, ArrayAccess
 {
+    use ContentCollectionTrait;
+
     /** @var Article[] */
     private array $items;
 
@@ -44,37 +48,6 @@ final class ArticleCollection implements IteratorAggregate, Countable, ArrayAcce
         }
 
         $this->items = array_values($items);
-    }
-
-    /**
-     * Return a new collection containing only published articles as of $now.
-     */
-    public function filterPublished(\DateTimeImmutable $now = new \DateTimeImmutable()): self
-    {
-        return new self(array_values(
-            array_filter($this->items, static fn(Article $dto) => $dto->isPublished($now))
-        ));
-    }
-
-    /**
-     * Return a new collection sorted by publish date, newest first.
-     */
-    public function sortByPublishDateDescending(): self
-    {
-        $items = $this->items;
-        usort($items, static fn(Article $a, Article $b): int => (
-            $b->getPublishDateTime() <=> $a->getPublishDateTime()
-        ));
-
-        return new self($items);
-    }
-
-    /**
-     * Return a new collection containing $length items starting at $offset.
-     */
-    public function slice(int $offset, int $length): self
-    {
-        return new self(array_slice($this->items, $offset, $length));
     }
 
     // -----------------------------------------------------------------------
