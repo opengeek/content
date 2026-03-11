@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Opengeek\Content\Tests;
 
 use LogicException;
-use Opengeek\Content\ArticleCollection;
 use Opengeek\Content\Article;
+use Opengeek\Content\ArticleCollection;
 use PHPUnit\Framework\TestCase;
 
 final class ArticleCollectionTest extends TestCase
@@ -67,7 +67,7 @@ final class ArticleCollectionTest extends TestCase
         $collection = new ArticleCollection();
 
         $this->expectException(LogicException::class);
-        $collection[0] = $this->makeDto('x', '2024-01-01'); // @phpstan-ignore-line
+        $collection[0] = $this->makeDto('x', '2024-01-01');
     }
 
     public function testOffsetUnsetThrowsLogicException(): void
@@ -123,7 +123,7 @@ final class ArticleCollectionTest extends TestCase
     public function testSliceReturnsSubset(): void
     {
         $items = array_map(
-            fn(int $i) => $this->makeDto("item-{$i}", "2024-01-0{$i}"),
+            fn (int $i) => $this->makeDto("item-{$i}", "2024-01-0{$i}"),
             range(1, 5)
         );
         $collection = new ArticleCollection($items);
@@ -138,6 +138,6 @@ final class ArticleCollectionTest extends TestCase
     public function testConstructorRejectsNonDtoItems(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        new ArticleCollection(['not-a-dto']); // @phpstan-ignore-line
+        new ArticleCollection(['not-a-dto']);
     }
 }

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Opengeek\Content;
 
-use Opengeek\Content\Contracts\ContentCollectionInterface;
-use Opengeek\Content\Support\ContentCollectionTrait;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use InvalidArgumentException;
 use IteratorAggregate;
 use LogicException;
+use Opengeek\Content\Contracts\ContentCollectionInterface;
+use Opengeek\Content\Support\ContentCollectionTrait;
 use Traversable;
 
 /**

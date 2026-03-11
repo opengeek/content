@@ -32,7 +32,7 @@ trait ContentCollectionTrait
         $now ??= new DateTimeImmutable();
 
         return new self(array_values(
-            array_filter($this->items, static fn(mixed $dto) => (
+            array_filter($this->items, static fn (mixed $dto) => (
                 method_exists($dto, 'isPublished') && $dto->isPublished($now)
             ))
         ));

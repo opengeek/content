@@ -36,7 +36,7 @@ final class CachingContentRepositoryTest extends TestCase
         $this->cache->expects(self::once())
             ->method('get')
             ->with($this->cachePrefix . '.all', self::isType('callable'))
-            ->willReturnCallback(function (string $key, callable $callback) use ($items) {
+            ->willReturnCallback(function (string $key, callable $callback) {
                 $item = $this->createMock(ItemInterface::class);
                 $item->expects(self::once())->method('expiresAfter')->with(3600);
                 return $callback($item);
@@ -59,7 +59,7 @@ final class CachingContentRepositoryTest extends TestCase
         $this->cache->expects(self::once())
             ->method('get')
             ->with($key, self::isType('callable'))
-            ->willReturnCallback(function (string $key, callable $callback) use ($dto) {
+            ->willReturnCallback(function (string $key, callable $callback) {
                 $item = $this->createMock(ItemInterface::class);
                 $item->expects(self::once())->method('expiresAfter')->with(3600);
                 return $callback($item);
@@ -83,7 +83,7 @@ final class CachingContentRepositoryTest extends TestCase
         $this->cache->expects(self::once())
             ->method('get')
             ->with($key, self::isType('callable'))
-            ->willReturnCallback(function (string $key, callable $callback) use ($items) {
+            ->willReturnCallback(function (string $key, callable $callback) {
                 $item = $this->createMock(ItemInterface::class);
                 $item->expects(self::once())->method('expiresAfter')->with(3600);
                 return $callback($item);
